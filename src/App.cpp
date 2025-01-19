@@ -73,7 +73,6 @@ void App::Run()
         throw std::runtime_error("RUN failed");
     }
 
-    int count = 10;
     while(!AppShouldQuit() && count > 0) {
 
         Input();
@@ -81,8 +80,7 @@ void App::Run()
         Render();
 
         util::TimeDelay_ms(1000);
-        count--;
-        LOG("iteration:", count);
+        
     }
 
 
