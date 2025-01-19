@@ -1,0 +1,36 @@
+- Vertex Buffer Object Allocates memory on the GPU:
+    1) create it using glGenBuffers(target, int&)
+    2) Once its created it needs to be bound to a bind point. 
+        a bind point tells OpenGL that this buffer is the current
+        active one for subsequent operations.
+        -> glBindBuffer(targetEnum, vbo)
+    3) Copy the vertex buffer data into vertex buffer memory:
+        -> glBufferData(target, sizeInBytes, buffer, DRAWTYPE)
+
+- Vertex Shaders:
+    1) have the shader source code somewhere.
+    2) create the shader object:
+        -> glCreateShader(shaderType) --> Fragment shader is similar except shader type here is dfifferent
+    3) attach the source to the shader object:
+        -> glShaderSource(vertexShaderObject, numElementsInStringArray, * to shader source, length opf something)
+    4) compile the shader:
+        -> glCompileShader(shader)
+
+- Shader Program:
+    Compiled shaders have to be linked toa shader program
+    Shader program object is then activeated for rendering
+    1) create the program:
+        glCreateProgram();
+    2) attach whatever shaders to the program   
+        glAttachShader(which program, which shader)
+    3) link the shaders
+        glLinkProgram(shaderProgram)
+    4) ** you can now use the shader with:**
+        ----> glUseProgram(program);
+    -> Once shaders have been linked to a program, the shaders themselves can be deleted:
+        glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+Vertex Attributes:
+ i.e. how does open gl know how to interpret the vertices data from the input array?
+ 

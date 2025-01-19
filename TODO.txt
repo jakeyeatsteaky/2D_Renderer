@@ -1,0 +1,4 @@
+
+[ ] Embed rendering into application 
+    - make renderer class
+    - VBO VAO all that

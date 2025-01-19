@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jakbak/jakbak/development/0xDEADBEEF",
-      "program": "/home/jakbak/jakbak/development/0xDEADBEEF/build/Debug/outDebug",
+      "cwd": "/home/jakbak/2D_Renderer",
+      "program": "/home/jakbak/2D_Renderer/build/2d_renderer",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
@@ -18,7 +18,8 @@
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
         }
-      ]
+      ],
+      "preLaunchTask": "CMake: Build"
     }
   ]
 }
