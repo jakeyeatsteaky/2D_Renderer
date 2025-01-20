@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/jakbak/2D_Renderer",
-      "program": "/home/jakbak/2D_Renderer/build/2d_renderer",
+      "cwd": "/home/jakbak/2d_Renderer",
+      "program": "/home/jakbak/2d_Renderer/build/2d_renderer",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

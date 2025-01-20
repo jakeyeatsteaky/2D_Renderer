@@ -1,6 +1,6 @@
 #ifndef UTILITY_HPP
 #define UTILITY_HPP
-
+#include "Logger.hpp"
 #include <cstdint>
 
 

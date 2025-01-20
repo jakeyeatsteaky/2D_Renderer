@@ -15,7 +15,7 @@ Window::~Window() noexcept
     SDL_DestroyWindow(m_window.get());
 }
 
-SDL_Window* Window::GetWindow()
+SDL_Window* Window::GetSDLWindow()
 {
     return m_window.get();
 }

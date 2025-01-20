@@ -13,7 +13,7 @@ public:
     Window();
     ~Window() noexcept;
     bool Init();
-    SDL_Window* GetWindow();
+    SDL_Window* GetSDLWindow();
 
 };
 #endif //end windowing hpp

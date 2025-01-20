@@ -1,5 +1,11 @@
 
 [ ] Embed rendering into application 
-    - make renderer class
-    - VBO VAO all that
+    [x] make renderer class
+    [ ] Shader classes
+    [ ] Shader program class
+    [ ] get a better idea for how the shaders work
+    [ ] VBO VAO all that
 
+
+!TODO
+[ ] Shader hot reloading
