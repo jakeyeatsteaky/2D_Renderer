@@ -2,6 +2,7 @@
 #define RENDERER_HPP
 #include <vector>
 
+#include "Shader.hpp"
 #include "SDL2/SDL.h"
 #include "glad.h"
 

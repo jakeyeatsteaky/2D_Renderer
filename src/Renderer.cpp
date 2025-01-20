@@ -1,6 +1,7 @@
 #include "Renderer.hpp"
 #include "Utility.hpp"
 #include "App.hpp"
+#include "Shader.hpp"
 
 Renderer::Renderer(const App& app) : m_app(app) 
 {
