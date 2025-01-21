@@ -1,3 +1,6 @@
+#include <fstream>
+#include <filesystem>
+
 #include "Renderer.hpp"
 #include "Utility.hpp"
 #include "App.hpp"
@@ -45,16 +48,44 @@ bool Renderer::Init()
     return true;
 }
 
+namespace fs = std::filesystem;
+std::vector<const char*> Renderer::get_shader_source(const char* path)
+{
+    std::vector<const char*> ret {};
+    // need to get how many files are at this path
+    fs::path cwd = fs::current_path();
+    fs::path dir(path);
+    if (fs::exists(dir)) {
+        if (fs::is_directory(dir)) {
+            fs::path::iterator it = dir.begin();
+            for (; it != dir.end(); ++it) {
+                std::cout << *it << std::endl;
+            }
+        } 
+        else {
+            ERR ("Path is not a directory: ", path);
+        }
+    } 
+    else {
+        ERR("File path does not exist: ", path);
+    }
+
+    return ret;
+}
+
 void Renderer::load_shaders()
 {
     // find shader directory
     // parse shader, create shader object, add to vec of shaders
 
     // create shader program will happen elsewhere
+
+    std::vector<const char*> vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
 }
 
 void Renderer::render()
 {
+    load_shaders();
     const char *vertexShaderSource = "#version 330 core\n"
                                      "layout (location = 0) in vec3 aPos;\n"
                                      "void main()\n"

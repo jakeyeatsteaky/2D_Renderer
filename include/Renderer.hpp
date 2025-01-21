@@ -17,6 +17,7 @@ public:
 
     void render();
     void load_shaders();
+    std::vector<const char*> get_shader_source(const char* path);
 
 private:
     const App& m_app;

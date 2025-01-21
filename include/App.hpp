@@ -6,8 +6,7 @@
 #include "EventManager.hpp"
 #include "Renderer.hpp"
 
-constexpr const char* SHADER_SOURCE_DIR_VERT = "/home/jakbak/2D_Renderer/shaders/vertex";
-constexpr const char* SHADER_SOURCE_DIR_FRAG = "/home/jakbak/2D_Renderer/shaders/fragment";
+
 
 class SDLInit
 {

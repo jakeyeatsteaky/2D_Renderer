@@ -45,6 +45,10 @@ public:
     {
 	    std::cerr << "ERROR:: " << err << " " << errMsg << std::endl;
     }
+	static void Err(const std::string& err, const std::string errMsg)
+    {
+	    std::cerr << "ERROR:: " << err << " " << errMsg << std::endl;
+    }
 
 };
 
