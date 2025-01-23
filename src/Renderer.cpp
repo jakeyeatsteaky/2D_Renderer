@@ -26,6 +26,8 @@ SDL_Window* Renderer::getSDLWindow()
     return window;
 }
 
+std::vector<std::string> vertSource{};
+std::vector<std::string> fragSource{};
 bool Renderer::Init()
 {
     SDL_Window* sdl_window = getSDLWindow();
@@ -45,21 +47,38 @@ bool Renderer::Init()
     LOG("Renderer: %s", glGetString(GL_RENDERER));
     LOG("OpenGL version supported: ", glGetString(GL_VERSION));
 
+    load_shaders();
+
     return true;
 }
 
 namespace fs = std::filesystem;
-std::vector<const char*> Renderer::get_shader_source(const char* path)
+std::vector<std::string> Renderer::get_shader_source(const char* path)
 {
-    std::vector<const char*> ret {};
+    std::vector<std::string> ret {};
     // need to get how many files are at this path
     fs::path cwd = fs::current_path();
     fs::path dir(path);
     if (fs::exists(dir)) {
         if (fs::is_directory(dir)) {
-            fs::path::iterator it = dir.begin();
-            for (; it != dir.end(); ++it) {
-                std::cout << *it << std::endl;
+            fs::directory_iterator it(path);
+            fs::directory_iterator end;
+            
+            for (; it != end; ++it) {
+                std::fstream file(it->path());
+                if (!file) {
+                    ERR("Invalid Path: ", it->path());
+                    continue;
+                }
+                std::string source;
+                std::string line;
+                while (std::getline(file, line)) {
+                    source += line;
+                    source += '\n';
+                }
+                source += '\0';
+                ret.push_back(source.c_str());
+                file.close();
             }
         } 
         else {
@@ -80,29 +99,44 @@ void Renderer::load_shaders()
 
     // create shader program will happen elsewhere
 
-    std::vector<const char*> vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
+    vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
+    fragSource = get_shader_source(util::SHADER_SOURCE_DIR_FRAG);
+    
+    if (fragSource.size() != vertSource.size()) LOG("Some shaders do not have a paired matching.");
+
+    size_t numShaders = std::less(vertSource.size(), fragSource.size());
+
+    for (size_t i = 0 ; i < numShaders; i++) {
+        Shader shader;
+        if (0 = shader.construct(vertSource[i].c_str(), fragSource[i].c_str()))  
+            m_shaders.push_back(shader);
+    }
 }
 
 void Renderer::render()
 {
-    load_shaders();
-    const char *vertexShaderSource = "#version 330 core\n"
-                                     "layout (location = 0) in vec3 aPos;\n"
-                                     "void main()\n"
-                                     "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-                                     "}\0";
+    //load_shaders();
+    // const char *vertexShaderSource = "#version 330 core\n"
+    //                                  "layout (location = 0) in vec3 aPos;\n"
+    //                                  "void main()\n"
+    //                                  "{\n"
+    //                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+    //                                  "}\0";
+
+    const char* vertShaderSource = vertSource[0].c_str();
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glShaderSource(vertexShader, 1, &vertShaderSource, NULL);
     glCompileShader(vertexShader);
 
-    const char *fragShaderSource = "#version 330 core\n"
-                                   "out vec4 fragColor;\n"
-                                   "void main()\n"
-                                   "{\n"
-                                   "   fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-                                   "}\0";
+    // const char *fragShaderSource = "#version 330 core\n"
+    //                                "out vec4 fragColor;\n"
+    //                                "void main()\n"
+    //                                "{\n"
+    //                                "   fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+    //                                "}\0";
+
+    const char* fragShaderSource = fragSource[0].c_str();
 
     unsigned int fragmentShader;
     fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);

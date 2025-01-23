@@ -14,16 +14,17 @@ public:
     Renderer(const App& app);
     ~Renderer();
     bool Init();
-
     void render();
-    void load_shaders();
-    std::vector<const char*> get_shader_source(const char* path);
+
 
 private:
     const App& m_app;
     SDL_Window* getSDLWindow();
-    std::vector<Shader> m_vertShaders;
-    std::vector<Shader> m_fragShaders;
+    std::vector<Shader> m_shaderPrograms;
+
+    void load_shaders();
+    std::vector<std::string> get_shader_source(const char* path);
+
 };
 
 #endif // RENDERER_HPP
