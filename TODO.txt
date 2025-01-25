@@ -1,14 +1,14 @@
 
 [ ] Embed rendering into application 
     [x] make renderer class
-    [ ] Shader program class
-        [ ] implement the "construct" method in Shader.
+    [x] Shader program class
+        [x] implement the "construct" method in Shader.
             - The only thing the program will keep track of is the Shader program unique id
                 stored as a Shader struct.  
                 Shader struct will have a construct method which needs vert/frag source
                 and an id field for calling the active program
-    [ ] get a better idea for how the shaders work !!
     [ ] VBO VAO all that !!
+    [ ] get a better idea for how the shaders work !!
 
 
 !TODO

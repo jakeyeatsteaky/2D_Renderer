@@ -91,7 +91,7 @@ std::vector<std::string> Renderer::get_shader_source(const char* path)
     return ret;
 }
 
-
+unsigned int VAO;
 void Renderer::load_shaders()
 {
     std::vector<std::string> vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
@@ -107,15 +107,6 @@ void Renderer::load_shaders()
             m_shaderPrograms.push_back(std::move(shader));
         } 
     }
-}
-
-unsigned int Renderer::GetActiveShaderProgram()
-{
-    return m_shaderPrograms[0]._id;
-}
-
-void Renderer::render()
-{
 
     float vertices[] = {
     -0.5f, -0.5f, 0.0f,
@@ -127,7 +118,7 @@ void Renderer::render()
     unsigned int VBO;
     glGenBuffers(1, &VBO);
 
-    unsigned int VAO;
+    
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
@@ -136,6 +127,17 @@ void Renderer::render()
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
+}
+
+unsigned int Renderer::GetActiveShaderProgram()
+{
+    return m_shaderPrograms[0]._id;
+}
+
+void Renderer::render()
+{
+
+    
     glClearColor(0.4f, 0.3f, 0.6f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
