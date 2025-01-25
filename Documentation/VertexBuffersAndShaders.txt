@@ -3,12 +3,13 @@
     - Creating the vertex buffer is a way to create memory allocation on the GPU 
     - The vertex buffer object needs to have an associated vertex attribute pointer 
     - The VAO stores the state of VBO and attribute relationships. 
-    
 
     1) VBO - store vertex data on the GPU
         glGenBuffers to get the buffer id
         glBindBuffer to make it the active buffer target
         glBufferData to copy user-defined data into the currently bound GPU buffer 
+        * The VBO represents a copy of the vertex data on the GPU.
+        * its corresponding VAPs 
 
     2) Tell the GPU how to process that vertex data using shaders 
 
@@ -22,8 +23,6 @@
                 glVertexAttribPointer(0,3,....)
                                       ^ ^ location zero, vec3 is the size (3)
                             
-
-
 - Vertex Buffer Object Allocates memory on the GPU:
     1) create it using glGenBuffers(target, int&)
     2) Once its created it needs to be bound to a bind point. 

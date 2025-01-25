@@ -114,14 +114,12 @@ void Renderer::load_shaders()
      0.0f,  0.5f, 0.0f
     }; 
 
-    // Vertex Buffer Objects
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-
-    
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
+    // Vertex Buffer Objects
+    unsigned int VBO;
+    glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
@@ -136,8 +134,6 @@ unsigned int Renderer::GetActiveShaderProgram()
 
 void Renderer::render()
 {
-
-    
     glClearColor(0.4f, 0.3f, 0.6f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
