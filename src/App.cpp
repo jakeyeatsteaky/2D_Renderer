@@ -82,7 +82,6 @@ void App::Run()
 
     while (!AppShouldQuit())
     {
-
         Input();
         Update();
         Render();

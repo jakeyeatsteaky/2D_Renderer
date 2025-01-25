@@ -26,8 +26,7 @@ SDL_Window* Renderer::getSDLWindow()
     return window;
 }
 
-std::vector<std::string> vertSource{};
-std::vector<std::string> fragSource{};
+
 bool Renderer::Init()
 {
     SDL_Window* sdl_window = getSDLWindow();
@@ -92,91 +91,37 @@ std::vector<std::string> Renderer::get_shader_source(const char* path)
     return ret;
 }
 
+
 void Renderer::load_shaders()
 {
-    // find shader directory
-    // parse shader, create shader object, add to vec of shaders
-
-    // create shader program will happen elsewhere
-
-    vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
-    fragSource = get_shader_source(util::SHADER_SOURCE_DIR_FRAG);
+    std::vector<std::string> vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
+    std::vector<std::string> fragSource = get_shader_source(util::SHADER_SOURCE_DIR_FRAG);
     
     if (fragSource.size() != vertSource.size()) LOG("Some shaders do not have a paired matching.");
 
-    size_t numShaders = std::less(vertSource.size(), fragSource.size());
+    size_t numShaders = (vertSource.size() < fragSource.size()) ? vertSource.size() : fragSource.size();
 
     for (size_t i = 0 ; i < numShaders; i++) {
         Shader shader;
-        if (0 = shader.construct(vertSource[i].c_str(), fragSource[i].c_str()))  
-            m_shaders.push_back(shader);
+        if (shader.construct(vertSource[i].c_str(), fragSource[i].c_str()) > -1) {   
+            m_shaderPrograms.push_back(std::move(shader));
+        } 
     }
+}
+
+unsigned int Renderer::GetActiveShaderProgram()
+{
+    return m_shaderPrograms[0]._id;
 }
 
 void Renderer::render()
 {
-    //load_shaders();
-    // const char *vertexShaderSource = "#version 330 core\n"
-    //                                  "layout (location = 0) in vec3 aPos;\n"
-    //                                  "void main()\n"
-    //                                  "{\n"
-    //                                  "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    //                                  "}\0";
-
-    const char* vertShaderSource = vertSource[0].c_str();
-
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertexShader, 1, &vertShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    // const char *fragShaderSource = "#version 330 core\n"
-    //                                "out vec4 fragColor;\n"
-    //                                "void main()\n"
-    //                                "{\n"
-    //                                "   fragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-    //                                "}\0";
-
-    const char* fragShaderSource = fragSource[0].c_str();
-
-    unsigned int fragmentShader;
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragShaderSource, NULL);
-    glCompileShader(fragmentShader);
-
-// checking error for shader compilation:
-    int success;
-    char infoLog[512];
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n"
-                  << infoLog << std::endl;
-    }
-
-    unsigned int shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
-
-// checking error for shader program linked correctly:
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
-    {
-        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-    std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n"
-                  << infoLog << std::endl;
-    }
-
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
-
 
     float vertices[] = {
     -0.5f, -0.5f, 0.0f,
      0.5f, -0.5f, 0.0f,
      0.0f,  0.5f, 0.0f
-}; 
+    }; 
 
     // Vertex Buffer Objects
     unsigned int VBO;
@@ -194,7 +139,7 @@ void Renderer::render()
     glClearColor(0.4f, 0.3f, 0.6f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
-    glUseProgram(shaderProgram);
+    glUseProgram(GetActiveShaderProgram());
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 
