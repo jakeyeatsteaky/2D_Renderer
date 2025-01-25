@@ -8,6 +8,9 @@
                 Shader struct will have a construct method which needs vert/frag source
                 and an id field for calling the active program
     [ ] VBO VAO all that !!
+        [ ] make vbo object 
+        [ ] make vao object and container in renderer 
+        [ ] how to architect the tightly coupled things so its an easy rendering switch?
     [ ] get a better idea for how the shaders work !!
 
 
