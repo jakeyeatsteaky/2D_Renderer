@@ -24,11 +24,14 @@ private:
     std::vector<Shader> m_shaderPrograms;
     std::vector<VAO> m_vertexArrays;
 
+    unsigned int activeVAO() { return m_vertexArrays[activeIdx].getVAOId(); }
     void load_shaders();
     void load_vertex_data();
+    void init_GL_state(unsigned vaoIdx);
 
     std::vector<std::string> get_shader_source(const char *path);
     unsigned int GetActiveShaderProgram();
+    int activeIdx = -1;
 };
 
 #endif // RENDERER_HPP

@@ -9,8 +9,11 @@
                 and an id field for calling the active program
     [ ] VBO VAO all that !!
         [x] make vbo object 
-        [ ] make vao object and container in renderer 
-        [ ] how to architect the tightly coupled things so its an easy rendering switch?
+        [x] make vao object and container in renderer 
+        [x] how to architect the tightly coupled things so its an easy rendering switch?
+        [ ] why doesnt the two triangles from different vertices work?
+        [ ] Can I do 2 VBOS specifying differnt triangles in 1 VAO which draws both triangles?
+    [ ] Loading vertex data from disk (lua? or python integratnio for generating vertex info?)
     [ ] get a better idea for how the shaders work !!
 
 
