@@ -8,7 +8,7 @@
                 Shader struct will have a construct method which needs vert/frag source
                 and an id field for calling the active program
     [ ] VBO VAO all that !!
-        [ ] make vbo object 
+        [x] make vbo object 
         [ ] make vao object and container in renderer 
         [ ] how to architect the tightly coupled things so its an easy rendering switch?
     [ ] get a better idea for how the shaders work !!
@@ -17,3 +17,6 @@
 !TODO
 [ ] Shader hot reloading
     - i have source stored in the file system so it can construct and pull from disk on the fly.  might be slow
+[ ] Error info for load_shaders and load_vertex_data
+    - in Renderer.cpp init function, both of the aforementioned functions are void 
+        should figure out how to get debug info in case creating VBOs/VAos fails

@@ -25,6 +25,8 @@ private:
     std::vector<VAO> m_vertexArrays;
 
     void load_shaders();
+    void load_vertex_data();
+
     std::vector<std::string> get_shader_source(const char *path);
     unsigned int GetActiveShaderProgram();
 };

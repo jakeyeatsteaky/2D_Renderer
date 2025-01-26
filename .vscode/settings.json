@@ -58,8 +58,8 @@
   "C_Cpp_Runner.msvcSecureNoWarnings": false,
   "C_Cpp.errorSquiggles": "disabled",
   "files.associations": {
-    "cstdint": "cpp"
+    "cstdint": "cpp",
+    "utility": "cpp"
   },
-
   "github.copilot.editor.enableAutoCompletions": false
 }

@@ -5,6 +5,7 @@
 #include "Utility.hpp"
 #include "App.hpp"
 #include "Shader.hpp"
+#include "VertexBuffer.hpp"
 
 Renderer::Renderer(const App& app) : m_app(app) 
 {
@@ -47,6 +48,7 @@ bool Renderer::Init()
     LOG("OpenGL version supported: ", glGetString(GL_VERSION));
 
     load_shaders();
+    load_vertex_data();
 
     return true;
 }
@@ -91,7 +93,6 @@ std::vector<std::string> Renderer::get_shader_source(const char* path)
     return ret;
 }
 
-unsigned int VAO;
 void Renderer::load_shaders()
 {
     std::vector<std::string> vertSource = get_shader_source(util::SHADER_SOURCE_DIR_VERT);
@@ -108,22 +109,34 @@ void Renderer::load_shaders()
         } 
     }
 
+}
+
+unsigned int VAO;
+void Renderer::load_vertex_data()
+{
+   // !TODO: make Vertex object
+   // have functino to import vertex data from disk (file)
+   // store in renderer? m_vectorOfVertices. 
     float vertices[] = {
     -0.5f, -0.5f, 0.0f,
      0.5f, -0.5f, 0.0f,
      0.0f,  0.5f, 0.0f
     }; 
 
+// HEres how I want the flow
+// 1 create a bunch of vbos and their metadata
+// 2 make the vao
+// 3 vao create state -> iterates through VBOs and does their OpenGL thing
+// 4 add VAO to renderer
+    VAO vao;
+    vao.updateState()
+
     glGenVertexArrays(1, &VAO);
     glBindVertexArray(VAO);
 
-    // Vertex Buffer Objects
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    VBO vbo(vertices, sizeof(vertices));
+    
     glEnableVertexAttribArray(0);
 }
 
