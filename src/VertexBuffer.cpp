@@ -47,7 +47,7 @@ void VBO::AddAttribute(const unsigned location,
 void VBO::activate() const
 {
 
-    glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
+    glBindBuffer(m_bufferType, m_vboID);
     for (const auto &attrib : m_attribPointers)
     {
         attrib.bind();

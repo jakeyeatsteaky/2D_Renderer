@@ -126,38 +126,37 @@ void Renderer::load_shaders()
 
 void Renderer::load_vertex_data()
 {
-    // !TODO: make Vertex object
-    // have functino to import vertex data from disk (file)
-    // store in renderer? m_vectorOfVertices.
     float vertices[] = {
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f};
+        0.5f, 0.5f, 0.0f,   // top right
+        0.5f, -0.5f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f   // top left
+    };
 
-    float vert[] = {
-        -0.5f, 0.5f, 0.0f,
-        -0.9f, 0.5f, 0.0f,
-        -0.6f, 0.0f, 0.0f};
+    unsigned indices[] = {
+        0, 1, 3,
+        1, 2, 3};
 
     // Create Vertex Array
     VAO vao; // glGenVertexArrays(1, &VAO);
 
     // Create Vertex Buffers which determine this VAO's state
     VBO vbo(vertices, sizeof(vertices));
-    vbo.AddAttribute(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), 0);
-
-    VBO vbo2(vert, sizeof(vert));
+    VBO ebo(indices, sizeof(indices), true);
     vbo.AddAttribute(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), 0);
 
     // Add all VBOs to this VAO
-    vao.add_vbo(std::move(vbo2));
     vao.add_vbo(std::move(vbo));
+    vao.add_vbo(std::move(ebo));
 
     m_vertexArrays.push_back(std::move(vao));
 }
 
+bool bUsePolyGonMode = false;
 void Renderer::init_GL_state(unsigned vaoIdx)
 {
+    if (bUsePolyGonMode)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     if (!m_vertexArrays[vaoIdx].initialized)
         m_vertexArrays[vaoIdx].init_vbo(); // glBindVertexArray(VAO); and then bind all vbos and attribs
     m_vertexArrays[vaoIdx].make_active();  // glEnableVertexAttribArray(thisVAOId);
@@ -176,7 +175,7 @@ void Renderer::render()
 
     glUseProgram(GetActiveShaderProgram());
     glBindVertexArray(activeVAO());
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
     SDL_GL_SwapWindow(getSDLWindow());
 }

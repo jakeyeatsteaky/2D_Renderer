@@ -27,7 +27,7 @@ class VBO
 {
 public:
     template <typename T>
-    VBO(T *data, size_t size);
+    VBO(T *data, size_t size, bool ebo = false, int drawType = 0);
     VBO(VBO &&other) noexcept = default;
     VBO() = delete;
     VBO(const VBO &) = delete;
@@ -46,6 +46,7 @@ public:
 
 private:
     unsigned int m_vboID;
+    GLuint m_bufferType;
     std::vector<VBOMetaData> m_attribPointers;
 };
 

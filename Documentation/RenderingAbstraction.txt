@@ -1,0 +1,6 @@
+
+All VBOs are bound to a VAO and the VAO is stored.
+
+Binding a VAO is called in the VAO::make_active() function
+which also iterates through all VBOs bound to this VAO 
+and 
